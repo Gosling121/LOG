@@ -1,22 +1,29 @@
-import pygame
+from telebot import *
 
-pygame.init()
-screen = pygame.display.set_mode((600,600))
-pygame.display.set_caption('LOG')
-sq = pygame.Surface((600,150))
-sq.fill('white')
-sq2 = pygame.Surface((600,150))
-sq2.fill('white')
-run = True
-while run:
-    screen.blit(sq,(1,1))
-    screen.blit(sq2, (1, 440))
+bot = telebot.TeleBot("7218073346:AAHLR7Wgo_yWxi5iAOGJSrvIURfXxlSI78s")
 
-    pygame.display.update()
-    for events in pygame.event.get():
-        if events.type == pygame.QUIT:
-            run = False
-            pygame.quit()
+@bot.message_handler(commands=['start'])
+def start(message):
+    markup = types.ReplyKeyboardMarkup()
+    b1 = types.KeyboardButton('start game')
+    markup.row(b1)
+    b2 = types.KeyboardButton('rulse')
+    markup.row(b2)
+    bot.send_message(message.chat.id,'hello',reply_markup=markup)
+    bot.register_next_step_handler(message,on_click)
+
+def on_click(message):
+    if message.text=='start game':
+        bot.send_message(message.chat.id,'124')
+    elif message.text=='rulse':
+        bot.send_message(message.chat.id,'321')
+
+def main(message):
+    bot.send_message(message.chat.id,'HELLO')
+
+
+
+bot.polling(none_stop= True)
 
 
 
